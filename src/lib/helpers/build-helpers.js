@@ -30,3 +30,31 @@ export function getSpecs(component) {
 
   return specs.filter((spec) => spec).join(' · ');
 }
+
+export function getWarnings(build) {
+  const warnings = [];
+  const cpu = getBuildComponent(build, 'CPU')?.component;
+  const motherboard = getBuildComponent(build, 'Motherboard')?.component;
+  const ram = getBuildComponent(build, 'RAM')?.component;
+  const gpu = getBuildComponent(build, 'GPU')?.component;
+  const cooler = getBuildComponent(build, 'Cooler')?.component;
+  const pcCase = getBuildComponent(build, 'Case')?.component;
+
+  if (cpu && motherboard && cpu.socket !== motherboard.socket) {
+    warnings.push(`${cpu.name} (${cpu.socket}) doesn't fit ${motherboard.name} (${motherboard.socket})`);
+  }
+
+  if (ram && motherboard && ram.memory_type !== motherboard.memory_type) {
+    warnings.push(`${motherboard.name} needs ${motherboard.memory_type} memory, but ${ram.name} is ${ram.memory_type}`);
+  }
+
+  if (gpu && pcCase && gpu.gpu_length > pcCase.max_gpu_length) {
+    warnings.push(`${gpu.name} (${gpu.gpu_length}mm) is too long for ${pcCase.name} (max ${pcCase.max_gpu_length}mm)`);
+  }
+
+  if (cooler && pcCase && cooler.cooler_height > pcCase.max_cooler_height) {
+    warnings.push(`${cooler.name} (${cooler.cooler_height}mm) is too tall for ${pcCase.name} (max ${pcCase.max_cooler_height}mm)`);
+  }
+
+  return warnings;
+}

@@ -8,6 +8,7 @@ import {
   formatPrice,
   getBuildComponent,
   getTotal,
+  getWarnings,
 } from '../../lib/helpers/build-helpers';
 
 const BuildDetails = () => {
@@ -65,6 +66,7 @@ const BuildDetails = () => {
   const isOwner = user && Number(user.sub) === build.user.id;
   const isAdmin = user && user.role === 'admin';
   const hasCase = getBuildComponent(build, 'Case');
+  const warnings = getWarnings(build);
 
   return (
     <main>
@@ -121,6 +123,14 @@ const BuildDetails = () => {
       </ul>
 
       <p className='total'>Total: {formatPrice(getTotal(build))}</p>
+      
+      {warnings.length > 0 && (
+        <ul className='warnings'>
+          {warnings.map((warning) => (
+            <li key={warning}>{warning}</li>
+          ))}
+        </ul>
+      )}
     </main>
   );
 };

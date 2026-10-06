@@ -26,9 +26,9 @@ const App = () => {
         <Route path='/builds/new' element={user ? <BuildForm /> : <Navigate to='/sign-in' />} />
         <Route path='/builds/:buildId/edit' element={user ? <BuildForm /> : <Navigate to='/sign-in' />} />
         <Route path='/builds/:buildId' element={<BuildDetails />} />
-        </Routes>
         <Route path='/builds/:buildId/choose/:category' element={user ? <PartList /> : <Navigate to='/sign-in' />} />
         <Route path='/components' element={<PartList />} />
+      </Routes>
     </>
   );
 };
