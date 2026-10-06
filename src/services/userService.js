@@ -1,30 +1,28 @@
-// THIS IS A DEMO OF AN AUTHENTICATED FETCH REQUEST
+const BASE_URL = `${import.meta.env.VITE_BACK_END_SERVER_URL}/users`;
 
-const BASE_URL = `${import.meta.env.VITE_BACK_END_SERVER_URL}`;
+const getHeaders = () => ({
+  Authorization: `Bearer ${localStorage.getItem('token')}`,
+});
 
-const currentUser = async () => {
-  try {
-    const config = {
-      headers: {
-        'Authorization': `Bearer ${localStorage.getItem('token')}`
-      }
-    }
-    const res = await fetch(`${BASE_URL}/current_user`, config);
+const index = async () => {
+  const res = await fetch(BASE_URL, { headers: getHeaders() });
+  const data = await res.json();
 
+  if (!res.ok) throw new Error(data.detail);
+
+  return data;
+};
+
+const deleteUser = async (userId) => {
+  const res = await fetch(`${BASE_URL}/${userId}`, {
+    method: 'DELETE',
+    headers: getHeaders(),
+  });
+
+  if (!res.ok) {
     const data = await res.json();
-
-    if (data.detail) {
-      throw new Error(data.detail);
-    }
-
-    return data
-  } catch (err) {
-    console.log(err);
-    throw new Error(err, { cause: err });
+    throw new Error(data.detail);
   }
 };
 
-
-export {
-  currentUser,
-};
+export { index, deleteUser };

@@ -9,6 +9,7 @@ import BuildList from './components/BuildList/BuildList';
 import BuildForm from './components/BuildForm/BuildForm';
 import BuildDetails from './components/BuildDetails/BuildDetails';
 import PartList from './components/PartList/PartList';
+import UserList from './components/UserList/UserList';
 
 import { UserContext } from './contexts/UserContext';
 
@@ -28,6 +29,7 @@ const App = () => {
         <Route path='/builds/:buildId' element={<BuildDetails />} />
         <Route path='/builds/:buildId/choose/:category' element={user ? <PartList /> : <Navigate to='/sign-in' />} />
         <Route path='/components' element={<PartList />} />
+        <Route path='/users' element={user?.role === 'admin' ? <UserList /> : <Navigate to='/' />} />
       </Routes>
     </>
   );
