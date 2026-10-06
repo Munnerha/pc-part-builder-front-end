@@ -1,8 +1,7 @@
 import { useState, useContext } from 'react';
-import { useNavigate } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 
 import { signIn } from '../../services/authService';
-
 import { UserContext } from '../../contexts/UserContext';
 
 const SignInForm = () => {
@@ -31,39 +30,31 @@ const SignInForm = () => {
   };
 
   return (
-    <main>
+    <main className='narrow'>
       <h1>Sign In</h1>
-      <p>{message}</p>
-      <form autoComplete='off' onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor='email'>Username:</label>
-          <input
-            type='text'
-            autoComplete='off'
-            id='username'
-            value={formData.username}
-            name='username'
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor='password'>Password:</label>
-          <input
-            type='password'
-            autoComplete='off'
-            id='password'
-            value={formData.password}
-            name='password'
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <button>Sign In</button>
-          <button onClick={() => navigate('/')}>Cancel</button>
-        </div>
+      {message && <p className='message'>{message}</p>}
+      <form onSubmit={handleSubmit}>
+        <label htmlFor='username'>Username</label>
+        <input
+          type='text'
+          id='username'
+          value={formData.username}
+          name='username'
+          onChange={handleChange}
+          required
+        />
+        <label htmlFor='password'>Password</label>
+        <input
+          type='password'
+          id='password'
+          value={formData.password}
+          name='password'
+          onChange={handleChange}
+          required
+        />
+        <button className='button'>Sign In</button>
       </form>
+      <p>No account? <Link to='/sign-up'>Sign Up</Link></p>
     </main>
   );
 };
