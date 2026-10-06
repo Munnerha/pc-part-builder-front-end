@@ -21,8 +21,8 @@ const BuildList = () => {
 
     fetchBuilds();
   }, []);
-
-    return (
+  
+return (
     <main>
       <h1>All Builds</h1>
       {message && <p className='message'>{message}</p>}

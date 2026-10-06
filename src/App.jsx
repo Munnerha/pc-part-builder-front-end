@@ -1,12 +1,12 @@
 import { useContext } from 'react';
-import { Route, Routes } from 'react-router';
+import { Navigate, Route, Routes } from 'react-router';
 
 import NavBar from './components/NavBar/NavBar';
 import Landing from './components/Landing/Landing';
 import SignUpForm from './components/SignUpForm/SignUpForm';
 import SignInForm from './components/SignInForm/SignInForm';
 import BuildList from './components/BuildList/BuildList';
-
+import BuildForm from './components/BuildForm/BuildForm';
 import { UserContext } from './contexts/UserContext';
 
 const App = () => {
@@ -20,6 +20,8 @@ const App = () => {
         <Route path='/sign-up' element={<SignUpForm />} />
         <Route path='/sign-in' element={<SignInForm />} />
         <Route path='/builds' element={<BuildList />} />
+        <Route path='/builds/new' element={user ? <BuildForm /> : <Navigate to='/sign-in' />} />
+        <Route path='/builds/:buildId/edit' element={user ? <BuildForm /> : <Navigate to='/sign-in' />} />
       </Routes>
     </>
   );
