@@ -7,6 +7,8 @@ import SignUpForm from './components/SignUpForm/SignUpForm';
 import SignInForm from './components/SignInForm/SignInForm';
 import BuildList from './components/BuildList/BuildList';
 import BuildForm from './components/BuildForm/BuildForm';
+import BuildDetails from './components/BuildDetails/BuildDetails';
+
 import { UserContext } from './contexts/UserContext';
 
 const App = () => {
@@ -22,6 +24,7 @@ const App = () => {
         <Route path='/builds' element={<BuildList />} />
         <Route path='/builds/new' element={user ? <BuildForm /> : <Navigate to='/sign-in' />} />
         <Route path='/builds/:buildId/edit' element={user ? <BuildForm /> : <Navigate to='/sign-in' />} />
+        <Route path='/builds/:buildId' element={<BuildDetails />} />
       </Routes>
     </>
   );
