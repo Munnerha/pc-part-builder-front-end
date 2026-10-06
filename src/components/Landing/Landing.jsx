@@ -1,8 +1,14 @@
+import { Link } from 'react-router';
+
 const Landing = () => {
   return (
-    <main>
-      <h1>Hello, you are on the landing page for visitors.</h1>
-      <p>Sign up now, or sign in to see your super secret dashboard!</p>
+    <main className='landing'>
+      <h1>Plan your AMD PC build</h1>
+      <p>Pick a part for each slot, see the total price, and get warned when parts don't fit.</p>
+      <div className='actions'>
+        <Link className='button' to='/sign-up'>Sign Up</Link>
+        <Link className='button button-outline' to='/builds'>Browse Builds</Link>
+      </div>
     </main>
   );
 };
