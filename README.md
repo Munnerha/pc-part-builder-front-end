@@ -1,3 +1,29 @@
+# PCPartBuilder
+
+![A build page in PCPartBuilder showing parts, total price and a compatibility warning](screenshot.png)
+
+PCPartBuilder is a planner for AMD desktop PC builds. You create a build, pick a part for each slot (CPU, motherboard, RAM, GPU, storage, cooler, power supply and case), and the app adds up the total price. It warns you when parts don't fit together: a CPU in the wrong socket, the wrong type of RAM, a GPU too long for the case, or a cooler too tall for it.
+
+I built it because I enjoy planning PC builds and wanted a simple tool that catches the mistakes that are easy to make when choosing parts.
+
+## Getting Started
+
+- Deployed app: [pc-part-builder-front-end.vercel.app](https://pc-part-builder-front-end.vercel.app)
+- Back-end repository: [pc-part-builder-back-end](https://github.com/Munnerha/pc-part-builder-back-end)
+- Planning materials: [user stories, ERD, wireframes and routes](#planning)
+
+Anyone can browse builds and parts. Sign up to create your own builds.
+
+## Next Steps
+
+- Check that the motherboard's size fits the case
+- Estimate a build's power draw and warn when the power supply is too weak
+- Hide parts that don't fit when choosing a part
+- Let the admin add and edit parts in the catalog
+- Product photos for parts
+
+## Planning
+
 ## User Stories
 
 - As a guest, I want to browse builds and parts.
