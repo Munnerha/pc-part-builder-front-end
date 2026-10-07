@@ -77,7 +77,6 @@ const BuildDetails = () => {
 
   const isOwner = user && Number(user.sub) === build.user.id;
   const isAdmin = user && user.role === 'admin';
-  const hasCase = getBuildComponent(build, 'Case');
   const warnings = getWarnings(build);
 
   return (
@@ -99,11 +98,11 @@ const BuildDetails = () => {
 
       {build.description && <p>{build.description}</p>}
       {message && <p className='message'>{message}</p>}
-            <ul className='rows'>
+
+      <ul className='rows'>
         {CATEGORIES.map((category) => {
           const buildComponent = getBuildComponent(build, category);
           const { icon: Icon, color } = ICONS[category];
-          const isLocked = (category === 'GPU' || category === 'Cooler') && !hasCase;
 
           return (
             <li className='row slot' key={category}>
@@ -114,7 +113,7 @@ const BuildDetails = () => {
                   <span className='price'>{formatPrice(buildComponent.component.price)}</span>
                 </>
               ) : (
-                <span className='muted'>{isLocked ? 'Choose a case first' : 'Empty'}</span>
+                <span className='muted'>Empty</span>
               )}
               {isOwner && (
                 <div className='actions'>
@@ -124,7 +123,7 @@ const BuildDetails = () => {
                       <button className='button button-danger' onClick={() => handleRemovePart(buildComponent.id)}>Remove</button>
                     </>
                   )}
-                  {!buildComponent && !isLocked && (
+                  {!buildComponent && (
                     <Link className='button button-success' to={`/builds/${buildId}/choose/${category}`}>Choose</Link>
                   )}
                 </div>
@@ -135,7 +134,7 @@ const BuildDetails = () => {
       </ul>
 
       <p className='total'>Total: {formatPrice(getTotal(build))}</p>
-      
+
       {warnings.length > 0 && (
         <ul className='warnings'>
           {warnings.map((warning) => (

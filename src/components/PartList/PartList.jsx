@@ -6,6 +6,7 @@ import * as componentService from '../../services/componentService';
 import { UserContext } from '../../contexts/UserContext';
 import {
   CATEGORIES,
+  fitsBuild,
   formatPrice,
   getBuildComponent,
   getSpecs,
@@ -21,7 +22,7 @@ const PartList = () => {
   const [selectedCategory, setSelectedCategory] = useState('');
   const [message, setMessage] = useState('');
 
-    useEffect(() => {
+  useEffect(() => {
     const fetchComponents = async () => {
       try {
         const fetchedComponents = await componentService.index(category || selectedCategory);
@@ -51,7 +52,7 @@ const PartList = () => {
     if (buildId) fetchBuild();
   }, [buildId, user, navigate]);
 
-    const handleAddPart = async (componentId) => {
+  const handleAddPart = async (componentId) => {
     try {
       const buildComponent = getBuildComponent(build, category);
 
@@ -68,7 +69,13 @@ const PartList = () => {
     }
   };
 
-    return (
+  // when choosing for a build, only parts that fit it are listed
+  const visibleComponents = build
+    ? components.filter((component) => fitsBuild(component, build))
+    : components;
+  const hiddenCount = components.length - visibleComponents.length;
+
+  return (
     <main>
       {buildId ? (
         <>
@@ -99,9 +106,12 @@ const PartList = () => {
       )}
 
       {message && <p className='message'>{message}</p>}
+      {hiddenCount > 0 && (
+        <p className='muted'>Parts hidden because they don't fit this build: {hiddenCount}</p>
+      )}
 
-            <ul className='rows'>
-        {components.map((component) => (
+      <ul className='rows'>
+        {visibleComponents.map((component) => (
           <li className='row part' key={component.id}>
             <div>
               <h2>{component.brand} {component.name}</h2>

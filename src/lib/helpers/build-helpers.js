@@ -58,3 +58,46 @@ export function getWarnings(build) {
 
   return warnings;
 }
+
+// AM4 parts use DDR4 memory and AM5 parts use DDR5
+const SOCKET_MEMORY = { AM4: 'DDR4', AM5: 'DDR5' };
+
+// true when a part fits the parts already in the build
+export function fitsBuild(component, build) {
+  const cpu = getBuildComponent(build, 'CPU')?.component;
+  const motherboard = getBuildComponent(build, 'Motherboard')?.component;
+  const ram = getBuildComponent(build, 'RAM')?.component;
+  const gpu = getBuildComponent(build, 'GPU')?.component;
+  const cooler = getBuildComponent(build, 'Cooler')?.component;
+  const pcCase = getBuildComponent(build, 'Case')?.component;
+
+  if (component.category === 'CPU') {
+    if (motherboard && component.socket !== motherboard.socket) return false;
+    if (ram && SOCKET_MEMORY[component.socket] !== ram.memory_type) return false;
+  }
+
+  if (component.category === 'Motherboard') {
+    if (cpu && component.socket !== cpu.socket) return false;
+    if (ram && component.memory_type !== ram.memory_type) return false;
+  }
+
+  if (component.category === 'RAM') {
+    if (motherboard && component.memory_type !== motherboard.memory_type) return false;
+    if (cpu && component.memory_type !== SOCKET_MEMORY[cpu.socket]) return false;
+  }
+
+  if (component.category === 'GPU') {
+    if (pcCase && component.gpu_length > pcCase.max_gpu_length) return false;
+  }
+
+  if (component.category === 'Cooler') {
+    if (pcCase && component.cooler_height > pcCase.max_cooler_height) return false;
+  }
+
+  if (component.category === 'Case') {
+    if (gpu && gpu.gpu_length > component.max_gpu_length) return false;
+    if (cooler && cooler.cooler_height > component.max_cooler_height) return false;
+  }
+
+  return true;
+}
