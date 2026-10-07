@@ -90,8 +90,7 @@ const BuildDetails = () => {
             <ul className='rows'>
         {CATEGORIES.map((category) => {
           const buildComponent = getBuildComponent(build, category);
-          // the GPU has to fit the case, so the case is picked first
-          const isLocked = category === 'GPU' && !hasCase;
+          const isLocked = (category === 'GPU' || category === 'Cooler') && !hasCase;
 
           return (
             <li className='row slot' key={category}>
