@@ -40,6 +40,7 @@ const BuildList = ({ onlyMine }) => {
             <Link className='row row-link' to={`/builds/${build.id}`}>
               <div>
                 <h2>{build.name}</h2>
+                {build.description && <p className='muted'>{build.description}</p>}
                 <p className='muted'>
                   by {build.user.username} · {build.build_components.length} parts
                 </p>
