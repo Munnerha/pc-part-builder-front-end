@@ -28,6 +28,7 @@ const App = () => {
         <Route path='/builds/:buildId/edit' element={user ? <BuildForm /> : <Navigate to='/sign-in' />} />
         <Route path='/builds/:buildId' element={<BuildDetails />} />
         <Route path='/builds/:buildId/choose/:category' element={user ? <PartList /> : <Navigate to='/sign-in' />} />
+        <Route path='/my-builds' element={user ? <BuildList onlyMine /> : <Navigate to='/sign-in' />} />
         <Route path='/components' element={<PartList />} />
         <Route path='/users' element={user?.role === 'admin' ? <UserList /> : <Navigate to='/' />} />
       </Routes>

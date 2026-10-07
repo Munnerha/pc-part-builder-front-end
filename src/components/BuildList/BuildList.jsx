@@ -1,10 +1,12 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router';
 
 import * as buildService from '../../services/buildService';
+import { UserContext } from '../../contexts/UserContext';
 import { formatPrice, getTotal } from '../../lib/helpers/build-helpers';
 
-const BuildList = () => {
+const BuildList = ({ onlyMine }) => {
+  const { user } = useContext(UserContext);
   const [builds, setBuilds] = useState([]);
   const [message, setMessage] = useState('Loading builds...');
 
@@ -13,7 +15,7 @@ const BuildList = () => {
       try {
         const fetchedBuilds = await buildService.index();
         setBuilds(fetchedBuilds);
-        setMessage(fetchedBuilds.length ? '' : 'No builds yet.');
+        setMessage('');
       } catch (err) {
         setMessage(err.message);
       }
@@ -21,13 +23,19 @@ const BuildList = () => {
 
     fetchBuilds();
   }, []);
-  
-return (
+
+  // on the My Builds page, keep only the signed-in user's builds
+  const visibleBuilds = onlyMine
+    ? builds.filter((build) => build.user.id === Number(user.sub))
+    : builds;
+
+  return (
     <main>
-      <h1>All Builds</h1>
+      <h1>{onlyMine ? 'My Builds' : 'All Builds'}</h1>
       {message && <p className='message'>{message}</p>}
+      {!message && visibleBuilds.length === 0 && <p className='message'>No builds yet.</p>}
       <ul className='rows'>
-        {builds.map((build) => (
+        {visibleBuilds.map((build) => (
           <li key={build.id}>
             <Link className='row row-link' to={`/builds/${build.id}`}>
               <div>

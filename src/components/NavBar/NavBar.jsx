@@ -20,6 +20,7 @@ const NavBar = () => {
         <li><Link to='/components'>Parts</Link></li>
         {user ? (
           <>
+            <li><Link to='/my-builds'>My Builds</Link></li>
             <li><Link to='/builds/new'>+ New Build</Link></li>
             {user.role === 'admin' && <li><Link to='/users'>Users</Link></li>}
             <li><Link to='/' onClick={handleSignOut}>Sign Out ({user.username})</Link></li>
