@@ -217,10 +217,13 @@ form .button {
 }
 
 .slot {
-  grid-template-columns: 120px 1fr auto auto;
+  grid-template-columns: 150px 1fr auto auto;
 }
 
 .slot-category {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   font-weight: 600;
 }
 

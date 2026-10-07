@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router';
+import { BsCpu, BsDeviceSsd, BsFan, BsGpuCard, BsMemory, BsMotherboard, BsPc, BsPlug } from 'react-icons/bs';
 
 import * as buildService from '../../services/buildService';
 import { UserContext } from '../../contexts/UserContext';
@@ -10,6 +11,17 @@ import {
   getTotal,
   getWarnings,
 } from '../../lib/helpers/build-helpers';
+
+const ICONS = {
+  CPU: { icon: BsCpu, color: '#2563eb' },
+  Motherboard: { icon: BsMotherboard, color: '#16a34a' },
+  RAM: { icon: BsMemory, color: '#9333ea' },
+  GPU: { icon: BsGpuCard, color: '#ea580c' },
+  Storage: { icon: BsDeviceSsd, color: '#d97706' },
+  Cooler: { icon: BsFan, color: '#0891b2' },
+  PSU: { icon: BsPlug, color: '#db2777' },
+  Case: { icon: BsPc, color: '#475569' },
+};
 
 const BuildDetails = () => {
   const { buildId } = useParams();
@@ -90,11 +102,12 @@ const BuildDetails = () => {
             <ul className='rows'>
         {CATEGORIES.map((category) => {
           const buildComponent = getBuildComponent(build, category);
+          const { icon: Icon, color } = ICONS[category];
           const isLocked = (category === 'GPU' || category === 'Cooler') && !hasCase;
 
           return (
             <li className='row slot' key={category}>
-              <span className='slot-category'>{category}</span>
+              <span className='slot-category'><Icon aria-hidden='true' color={color} size={20} /> {category}</span>
               {buildComponent ? (
                 <>
                   <span>{buildComponent.component.brand} {buildComponent.component.name}</span>
