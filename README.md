@@ -1,6 +1,6 @@
 # PCPartBuilder
 
-![A build page in PCPartBuilder showing parts, total price and a compatibility warning](screenshot.png)
+![The Parts page in PCPartBuilder listing CPUs with their sockets and prices](screenshot.png)
 
 PCPartBuilder is a planner for AMD desktop PC builds. You create a build, pick a part for each slot (CPU, motherboard, RAM, GPU, storage, cooler, power supply and case), and the app adds up the total price. It warns you when parts don't fit together: a CPU in the wrong socket, the wrong type of RAM, a GPU too long for the case, or a cooler too tall for it.
 
@@ -13,6 +13,23 @@ I built it because I enjoy planning PC builds and wanted a simple tool that catc
 - Planning materials: [user stories, ERD, wireframes and routes](#planning)
 
 Anyone can browse builds and parts. Sign up to create your own builds.
+
+## Technologies Used
+
+- JavaScript, React and React Router
+- Vite
+- CSS with Flexbox and Grid
+- react-icons
+- Python, FastAPI, SQLAlchemy and Alembic
+- PostgreSQL
+- JWT authentication
+- Vercel (front end), Render (back end) and Neon (database)
+
+## Attributions
+
+- Icons from [Bootstrap Icons](https://icons.getbootstrap.com/), used through [react-icons](https://react-icons.github.io/react-icons/)
+- Part names and specs based on [docyx/pc-part-dataset](https://github.com/docyx/pc-part-dataset) and manufacturer spec pages
+- Inspired by [PCPartPicker](https://pcpartpicker.com/)
 
 ## Next Steps
 
@@ -90,7 +107,6 @@ Anyone can browse builds and parts. Sign up to create your own builds.
 | `/components` | Parts catalog |
 | `/users` | Users (admin) |
 
-markdown
 ## Component Hierarchy
 
 ```
